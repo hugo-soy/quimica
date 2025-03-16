@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mem Pd</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin-top: 20px;
+      color: #333;
+    }
+    .sel {
+      margin: 20px;
+    }
+    .sel button {
+      margin: 0 5px;
+      padding: 8px 12px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      background: #2980b9;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .sel button:hover {
+      background: #3498db;
+    }
+    #tmr {
+      font-size: 18px;
+      color: #e74c3c;
+      margin-bottom: 10px;
+    }
+    .brd {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      width: 90%;
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+    /* Tarjeta: estructura 3D */
+    .crd {
+      width: 120px;
+      height: 160px;
+      perspective: 1000px;
+    }
+    .inr {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .crd.flp .inr {
+      transform: rotateY(180deg);
+    }
+    .frt, .bak {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+    .frt {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: #fff;
+    }
+    .bak {
+      background: #fff;
+      color: #333;
+      transform: rotateY(180deg);
+      border: 2px solid #2980b9;
+      text-align: center;
+    }
+    .crd.hid {
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+  <h1>Memorama tabla peridica </h1>
+  <div class="sel">
+    <button onclick="str('facl')">Fácil</button>
+    <button onclick="str('norm')">Normal</button>
+    <button onclick="str('difc')">Difícil</button>
+  </div>
+  <div id="tmr"></div>
+  <div id="brd" class="brd"></div>
+
+  <script>
+    // Datos: 20 primeros elementos con info y un hecho (fac) para cada uno
+    const els = [
+      { id: 'H',  nam: 'Hidrógeno',  sym: 'H',  atm: 1,  fac: 'Es el elemento más ligero.' },
+      { id: 'He', nam: 'Helio',      sym: 'He', atm: 2,  fac: 'Se usa en globos y dirigibles.' },
+      { id: 'Li', nam: 'Litio',      sym: 'Li', atm: 3,  fac: 'Se usa en baterías.' },
+      { id: 'Be', nam: 'Berilio',    sym: 'Be', atm: 4,  fac: 'Utilizado en aleaciones aeroespaciales.' },
+      { id: 'B',  nam: 'Boro',       sym: 'B',  atm: 5,  fac: 'Se usa para crear carros.' },
+      { id: 'C',  nam: 'Carbono',    sym: 'C',  atm: 6,  fac: 'Forma la base de la vida.' },
+      { id: 'N',  nam: 'Nitrógeno',  sym: 'N',  atm: 7,  fac: 'Esencial en fertilizantes.' },
+      { id: 'O',  nam: 'Oxígeno',    sym: 'O',  atm: 8,  fac: 'Necesario para la respiración.' },
+      { id: 'F',  nam: 'Flúor',      sym: 'F',  atm: 9,  fac: 'Previene caries dentales.' },
+      { id: 'Ne', nam: 'Neón',       sym: 'Ne', atm: 10, fac: 'Se usa en luces de neón.' },
+      { id: 'Na', nam: 'Sodio',      sym: 'Na', atm: 11, fac: 'Presente en la sal de mesa.' },
+      { id: 'Mg', nam: 'Magnesio',   sym: 'Mg', atm: 12, fac: 'Importante en aleaciones.' },
+      { id: 'Al', nam: 'Aluminio',   sym: 'Al', atm: 13, fac: 'Ligero y resistente.' },
+      { id: 'Si', nam: 'Silicio',    sym: 'Si', atm: 14, fac: 'Base de la tecnología.' },
+      { id: 'P',  nam: 'Fósforo',    sym: 'P',  atm: 15, fac: 'Utilizado en fertilizantes.' },
+      { id: 'S',  nam: 'Azufre',     sym: 'S',  atm: 16, fac: 'Se usa en ácido sulfúrico.' },
+      { id: 'Cl', nam: 'Cloro',      sym: 'Cl', atm: 17, fac: 'Desinfecta el agua.' },
+      { id: 'Ar', nam: 'Argón',      sym: 'Ar', atm: 18, fac: 'Se usa en iluminación.' },
+      { id: 'K',  nam: 'Potasio',    sym: 'K',  atm: 19, fac: 'Clave en funciones musculares.' },
+      { id: 'Ca', nam: 'Calcio',     sym: 'Ca', atm: 20, fac: 'Esencial para huesos y dientes.' }
+    ];
+
+    // Variables globales
+    let sel = [];   // cartas
+    let op1 = null; // 1ª carta
+    let op2 = null; // 2ª carta
+    let cnt = 0;    // parejas halladas
+    let tot = 0;    // total parejas
+    let tmr;        // temporizador
+    let rem = 0;    // tiempo restante
+
+    // Inicia el juego según dificultad: 'facl', 'norm', 'difc'
+    function str(dif) {
+      let num = 0, tim = 0;
+      if(dif==='facl'){
+        num = 5; tim = 60;
+      } else if(dif==='norm'){
+        num = 10; tim = 40;
+      } else if(dif==='difc'){
+        num = 20; tim = 20;
+      }
+      tot = num;
+      rem = tim;
+      document.getElementById('tmr').textContent = rem + " s";
+      
+      // Selecciona los elementos y crea dos cartas: una con info y otra con hecho
+      let arr = els.slice(0, num);
+      let dup = [];
+      arr.forEach(it => {
+        dup.push({ ...it, typ: 'inf' });
+        dup.push({ ...it, typ: 'fac' });
+      });
+      dup.sort(() => Math.random() - 0.5);
+      sel = dup.map((it, ix) => ({ ...it, ix: ix }));
+      cnt = 0; op1 = null; op2 = null;
+      let brd = document.getElementById('brd');
+      brd.innerHTML = '';
+      
+      // Crea cada tarjeta con estructura 3D
+      sel.forEach(it => {
+        let dv = document.createElement('div');
+        dv.className = 'crd';
+        dv.dataset.id = it.id;
+        dv.dataset.typ = it.typ;
+        dv.dataset.ix = it.ix;
+        
+        let inr = document.createElement('div');
+        inr.className = 'inr';
+        
+        let frt = document.createElement('div');
+        frt.className = 'frt';
+        frt.innerHTML = '?';
+        
+        let bak = document.createElement('div');
+        bak.className = 'bak';
+        bak.innerHTML = '';
+        
+        inr.appendChild(frt);
+        inr.appendChild(bak);
+        dv.appendChild(inr);
+        
+        dv.addEventListener('click', clc);
+        brd.appendChild(dv);
+      });
+      
+      clearInterval(tmr);
+      tmr = setInterval(upd, 1000);
+    }
+
+    // Actualiza el temporizador
+    function upd() {
+      rem--;
+      document.getElementById('tmr').textContent = rem + " s";
+      if(rem <= 0) {
+        clearInterval(tmr);
+        alert('¡Tiempo acabado!');
+        rst();
+      }
+    }
+
+    // Maneja el clic en una tarjeta
+    function clc(e) {
+      let dv = e.currentTarget;
+      if(dv.classList.contains('flp') || dv.classList.contains('hid')) return;
+      let id = dv.dataset.ix;
+      let it = sel.find(c => c.ix == id);
+      // Prepara la parte trasera con el contenido adecuado
+      let bak = dv.querySelector('.bak');
+      if(it.typ === 'inf'){
+        bak.innerHTML = '<strong>' + it.sym + '</strong><br>' + it.nam + '<br>N° ' + it.atm;
+      } else {
+        bak.innerHTML = it.fac;
+      }
+      dv.classList.add('flp');
+      if(!op1) {
+        op1 = dv;
+      } else if(!op2) {
+        op2 = dv;
+        // Comprueba coincidencia: mismo id y tipos complementarios
+        if(op1.dataset.id === op2.dataset.id && op1.dataset.typ !== op2.dataset.typ) {
+          op1.classList.add('hid');
+          op2.classList.add('hid');
+          cnt++;
+          op1 = null; op2 = null;
+          if(cnt === tot) {
+            clearInterval(tmr);
+            setTimeout(() => { alert('¡Ganaste!'); rst(); }, 500);
+          }
+        } else {
+          setTimeout(() => {
+            op1.classList.remove('flp');
+            op1.querySelector('.bak').innerHTML = '';
+            op2.classList.remove('flp');
+            op2.querySelector('.bak').innerHTML = '';
+            op1 = null; op2 = null;
+          }, 800);
+        }
+      }
+    }
+
+    // Reinicia el juego
+    function rst() {
+      clearInterval(tmr);
+      document.getElementById('brd').innerHTML = '';
+      document.getElementById('tmr').textContent = '';
+    }
+  </script>
+</body>
+</html>
