@@ -93,7 +93,7 @@
   </style>
 </head>
 <body>
-  <h1>Memorama tabla peridica </h1>
+  <h1>Memoria P</h1>
   <div class="sel">
     <button onclick="str('facl')">Fácil</button>
     <button onclick="str('norm')">Normal</button>
@@ -105,26 +105,125 @@
   <script>
     // Datos: 20 primeros elementos con info y un hecho (fac) para cada uno
     const els = [
-      { id: 'H',  nam: 'Hidrógeno',  sym: 'H',  atm: 1,  fac: 'Es el elemento más ligero.' },
-      { id: 'He', nam: 'Helio',      sym: 'He', atm: 2,  fac: 'Se usa en globos y dirigibles.' },
-      { id: 'Li', nam: 'Litio',      sym: 'Li', atm: 3,  fac: 'Se usa en baterías.' },
-      { id: 'Be', nam: 'Berilio',    sym: 'Be', atm: 4,  fac: 'Utilizado en aleaciones aeroespaciales.' },
-      { id: 'B',  nam: 'Boro',       sym: 'B',  atm: 5,  fac: 'Se usa para crear carros.' },
-      { id: 'C',  nam: 'Carbono',    sym: 'C',  atm: 6,  fac: 'Forma la base de la vida.' },
-      { id: 'N',  nam: 'Nitrógeno',  sym: 'N',  atm: 7,  fac: 'Esencial en fertilizantes.' },
-      { id: 'O',  nam: 'Oxígeno',    sym: 'O',  atm: 8,  fac: 'Necesario para la respiración.' },
-      { id: 'F',  nam: 'Flúor',      sym: 'F',  atm: 9,  fac: 'Previene caries dentales.' },
-      { id: 'Ne', nam: 'Neón',       sym: 'Ne', atm: 10, fac: 'Se usa en luces de neón.' },
-      { id: 'Na', nam: 'Sodio',      sym: 'Na', atm: 11, fac: 'Presente en la sal de mesa.' },
-      { id: 'Mg', nam: 'Magnesio',   sym: 'Mg', atm: 12, fac: 'Importante en aleaciones.' },
-      { id: 'Al', nam: 'Aluminio',   sym: 'Al', atm: 13, fac: 'Ligero y resistente.' },
-      { id: 'Si', nam: 'Silicio',    sym: 'Si', atm: 14, fac: 'Base de la tecnología.' },
-      { id: 'P',  nam: 'Fósforo',    sym: 'P',  atm: 15, fac: 'Utilizado en fertilizantes.' },
-      { id: 'S',  nam: 'Azufre',     sym: 'S',  atm: 16, fac: 'Se usa en ácido sulfúrico.' },
-      { id: 'Cl', nam: 'Cloro',      sym: 'Cl', atm: 17, fac: 'Desinfecta el agua.' },
-      { id: 'Ar', nam: 'Argón',      sym: 'Ar', atm: 18, fac: 'Se usa en iluminación.' },
-      { id: 'K',  nam: 'Potasio',    sym: 'K',  atm: 19, fac: 'Clave en funciones musculares.' },
-      { id: 'Ca', nam: 'Calcio',     sym: 'Ca', atm: 20, fac: 'Esencial para huesos y dientes.' }
+  { id: 'H',  nam: 'Hidrógeno',    sym: 'H',   atm: 1,   fac: 'Es el elemento más ligero.' },
+  { id: 'He', nam: 'Helio',        sym: 'He',  atm: 2,   fac: 'Se usa en globos y dirigibles.' },
+  { id: 'Li', nam: 'Litio',        sym: 'Li',  atm: 3,   fac: 'Se usa en baterías.' },
+  { id: 'Be', nam: 'Berilio',      sym: 'Be',  atm: 4,   fac: 'Utilizado en aleaciones aeroespaciales.' },
+  { id: 'B',  nam: 'Boro',         sym: 'B',   atm: 5,   fac: 'Se usa para crear carros.' },
+  { id: 'C',  nam: 'Carbono',      sym: 'C',   atm: 6,   fac: 'Forma la base de la vida.' },
+  { id: 'N',  nam: 'Nitrógeno',    sym: 'N',   atm: 7,   fac: 'Esencial en fertilizantes.' },
+  { id: 'O',  nam: 'Oxígeno',      sym: 'O',   atm: 8,   fac: 'Necesario para la respiración.' },
+  { id: 'F',  nam: 'Flúor',        sym: 'F',   atm: 9,   fac: 'Previene caries dentales.' },
+  { id: 'Ne', nam: 'Neón',         sym: 'Ne',  atm: 10,  fac: 'Se usa en luces de neón.' },
+  { id: 'Na', nam: 'Sodio',        sym: 'Na',  atm: 11,  fac: 'Presente en la sal de mesa.' },
+  { id: 'Mg', nam: 'Magnesio',     sym: 'Mg',  atm: 12,  fac: 'Importante en aleaciones.' },
+  { id: 'Al', nam: 'Aluminio',     sym: 'Al',  atm: 13,  fac: 'Ligero y resistente.' },
+  { id: 'Si', nam: 'Silicio',      sym: 'Si',  atm: 14,  fac: 'Base de la tecnología.' },
+  { id: 'P',  nam: 'Fósforo',      sym: 'P',   atm: 15,  fac: 'Utilizado en fertilizantes.' },
+  { id: 'S',  nam: 'Azufre',       sym: 'S',   atm: 16,  fac: 'Se usa en ácido sulfúrico.' },
+  { id: 'Cl', nam: 'Cloro',        sym: 'Cl',  atm: 17,  fac: 'Desinfecta el agua.' },
+  { id: 'Ar', nam: 'Argón',        sym: 'Ar',  atm: 18,  fac: 'Se usa en iluminación.' },
+  { id: 'K',  nam: 'Potasio',      sym: 'K',   atm: 19,  fac: 'Clave en funciones musculares.' },
+  { id: 'Ca', nam: 'Calcio',       sym: 'Ca',  atm: 20,  fac: 'Esencial para huesos y dientes.' },
+  { id: 'Sc', nam: 'Escandio',     sym: 'Sc',  atm: 21,  fac: 'Usado en aleaciones aeroespaciales.' },
+  { id: 'Ti', nam: 'Titanio',      sym: 'Ti',  atm: 22,  fac: 'Usado en implantes médicos.' },
+  { id: 'V',  nam: 'Vanadio',      sym: 'V',   atm: 23,  fac: 'Usado en aleaciones de acero.' },
+  { id: 'Cr', nam: 'Cromo',        sym: 'Cr',  atm: 24,  fac: 'Usado en recubrimientos metálicos.' },
+  { id: 'Mn', nam: 'Manganeso',    sym: 'Mn',  atm: 25,  fac: 'Usado en la producción de acero.' },
+  { id: 'Fe', nam: 'Hierro',       sym: 'Fe',  atm: 26,  fac: 'Usado en construcción y maquinaria.' },
+  { id: 'Co', nam: 'Cobalto',      sym: 'Co',  atm: 27,  fac: 'Usado en baterías recargables.' },
+  { id: 'Ni', nam: 'Níquel',       sym: 'Ni',  atm: 28,  fac: 'Usado en monedas y baterías.' },
+  { id: 'Cu', nam: 'Cobre',        sym: 'Cu',  atm: 29,  fac: 'Usado en cables eléctricos.' },
+  { id: 'Zn', nam: 'Zinc',         sym: 'Zn',  atm: 30,  fac: 'Usado en galvanización.' },
+  { id: 'Ga', nam: 'Galio',        sym: 'Ga',  atm: 31,  fac: 'Usado en termómetros de alta precisión.' },
+  { id: 'Ge', nam: 'Germanio',     sym: 'Ge',  atm: 32,  fac: 'Usado en fibra óptica.' },
+  { id: 'As', nam: 'Arsénico',     sym: 'As',  atm: 33,  fac: 'Usado en pesticidas.' },
+  { id: 'Se', nam: 'Selenio',      sym: 'Se',  atm: 34,  fac: 'Usado en fotocélulas.' },
+  { id: 'Br', nam: 'Bromo',        sym: 'Br',  atm: 35,  fac: 'Usado en retardantes de llama.' },
+  { id: 'Kr', nam: 'Kriptón',      sym: 'Kr',  atm: 36,  fac: 'Usado en lámparas de alta intensidad.' },
+  { id: 'Rb', nam: 'Rubidio',      sym: 'Rb',  atm: 37,  fac: 'Usado en relojes atómicos.' },
+  { id: 'Sr', nam: 'Estroncio',    sym: 'Sr',  atm: 38,  fac: 'Usado en fuegos artificiales.' },
+  { id: 'Y',  nam: 'Itrio',        sym: 'Y',   atm: 39,  fac: 'Usado en pantallas LED.' },
+  { id: 'Zr', nam: 'Circonio',     sym: 'Zr',  atm: 40,  fac: 'Usado en reactores nucleares.' },
+  { id: 'Nb', nam: 'Niobio',       sym: 'Nb',  atm: 41,  fac: 'Usado en imanes superconductores.' },
+  { id: 'Mo', nam: 'Molibdeno',    sym: 'Mo',  atm: 42,  fac: 'Usado en aleaciones de acero.' },
+  { id: 'Tc', nam: 'Tecnecio',     sym: 'Tc',  atm: 43,  fac: 'Usado en medicina nuclear.' },
+  { id: 'Ru', nam: 'Rutenio',      sym: 'Ru',  atm: 44,  fac: 'Usado en chips de memoria.' },
+  { id: 'Rh', nam: 'Rodio',        sym: 'Rh',  atm: 45,  fac: 'Usado en catalizadores automotrices.' },
+  { id: 'Pd', nam: 'Paladio',      sym: 'Pd',  atm: 46,  fac: 'Usado en convertidores catalíticos.' },
+  { id: 'Ag', nam: 'Plata',        sym: 'Ag',  atm: 47,  fac: 'Usado en joyería y electrónica.' },
+  { id: 'Cd', nam: 'Cadmio',       sym: 'Cd',  atm: 48,  fac: 'Usado en baterías recargables.' },
+  { id: 'In', nam: 'Indio',        sym: 'In',  atm: 49,  fac: 'Usado en pantallas táctiles.' },
+  { id: 'Sn', nam: 'Estaño',       sym: 'Sn',  atm: 50,  fac: 'Usado en soldaduras.' },
+  { id: 'Sb', nam: 'Antimonio',    sym: 'Sb',  atm: 51,  fac: 'Usado en semiconductores.' },
+  { id: 'Te', nam: 'Telurio',      sym: 'Te',  atm: 52,  fac: 'Usado en paneles solares.' },
+  { id: 'I',  nam: 'Yodo',         sym: 'I',   atm: 53,  fac: 'Usado en desinfectantes.' },
+  { id: 'Xe', nam: 'Xenón',        sym: 'Xe',  atm: 54,  fac: 'Usado en lámparas de flash.' },
+  { id: 'Cs', nam: 'Cesio',        sym: 'Cs',  atm: 55,  fac: 'Usado en relojes atómicos.' },
+  { id: 'Ba', nam: 'Bario',        sym: 'Ba',  atm: 56,  fac: 'Usado en radiografías médicas.' },
+  { id: 'La', nam: 'Lantano',      sym: 'La',  atm: 57,  fac: 'Usado en electrodos y lentes ópticas.' },
+  { id: 'Ce', nam: 'Cerio',        sym: 'Ce',  atm: 58,  fac: 'Usado en encendedores y catalizadores.' },
+  { id: 'Pr', nam: 'Praseodimio',  sym: 'Pr',  atm: 59,  fac: 'Usado en imanes de alto rendimiento.' },
+  { id: 'Nd', nam: 'Neodimio',     sym: 'Nd',  atm: 60,  fac: 'Usado en discos duros y audífonos.' },
+  { id: 'Pm', nam: 'Prometio',     sym: 'Pm',  atm: 61,  fac: 'Usado en baterías nucleares.' },
+  { id: 'Sm', nam: 'Samario',      sym: 'Sm',  atm: 62,  fac: 'Usado en imanes y reactores nucleares.' },
+  { id: 'Eu', nam: 'Europio',      sym: 'Eu',  atm: 63,  fac: 'Usado en pantallas de TV y LEDs.' },
+  { id: 'Gd', nam: 'Gadolinio',    sym: 'Gd',  atm: 64,  fac: 'Usado en escáneres de resonancia magnética.' },
+  { id: 'Tb', nam: 'Terbio',       sym: 'Tb',  atm: 65,  fac: 'Usado en pantallas de color.' },
+  { id: 'Dy', nam: 'Disprosio',    sym: 'Dy',  atm: 66,  fac: 'Usado en imanes y reactores nucleares.' },
+  { id: 'Ho', nam: 'Holmio',       sym: 'Ho',  atm: 67,  fac: 'Usado en imanes y láseres.' },
+  { id: 'Er', nam: 'Erbio',        sym: 'Er',  atm: 68,  fac: 'Usado en fibras ópticas.' },
+  { id: 'Tm', nam: 'Tulio',        sym: 'Tm',  atm: 69,  fac: 'Usado en dispositivos láser.' },
+  { id: 'Yb', nam: 'Iterbio',      sym: 'Yb',  atm: 70,  fac: 'Usado en relojes atómicos.' },
+  { id: 'Lu', nam: 'Lutecio',      sym: 'Lu',  atm: 71,  fac: 'Usado en detectores de PET.' },
+  { id: 'Hf', nam: 'Hafnio',       sym: 'Hf',  atm: 72,  fac: 'Usado en reactores nucleares.' },
+  { id: 'Ta', nam: 'Tantalio',     sym: 'Ta',  atm: 73,  fac: 'Usado en condensadores electrónicos.' },
+  { id: 'W',  nam: 'Wolframio',    sym: 'W',   atm: 74,  fac: 'Usado en filamentos de bombillas.' },
+  { id: 'Re', nam: 'Renio',        sym: 'Re',  atm: 75,  fac: 'Usado en motores a reacción.' },
+  { id: 'Os', nam: 'Osmio',        sym: 'Os',  atm: 76,  fac: 'Usado en puntas de pluma y contactos eléctricos.' },
+  { id: 'Ir', nam: 'Iridio',       sym: 'Ir',  atm: 77,  fac: 'Usado en aleaciones resistentes al calor.' },
+  { id: 'Pt', nam: 'Platino',      sym: 'Pt',  atm: 78,  fac: 'Usado en joyería y catalizadores.' },
+  { id: 'Au', nam: 'Oro',          sym: 'Au',  atm: 79,  fac: 'Usado en joyería y electrónica.' },
+  { id: 'Hg', nam: 'Mercurio',     sym: 'Hg',  atm: 80,  fac: 'Usado en termómetros y lámparas.' },
+  { id: 'Tl', nam: 'Talio',        sym: 'Tl',  atm: 81,  fac: 'Usado en detectores de radiación.' },
+  { id: 'Pb', nam: 'Plomo',        sym: 'Pb',  atm: 82,  fac: 'Usado en baterías y protección contra radiación.' },
+  { id: 'Bi', nam: 'Bismuto',      sym: 'Bi',  atm: 83,  fac: 'Usado en medicamentos y aleaciones.' },
+  { id: 'Po', nam: 'Polonio',      sym: 'Po',  atm: 84,  fac: 'Usado en generadores termoeléctricos.' },
+  { id: 'At', nam: 'Astato',       sym: 'At',  atm: 85,  fac: 'Usado en investigación médica.' },
+  { id: 'Rn', nam: 'Radón',        sym: 'Rn',  atm: 86,  fac: 'Usado en tratamientos contra el cáncer.' },
+  { id: 'Fr', nam: 'Francio',      sym: 'Fr',  atm: 87,  fac: 'Usado en investigación científica.' },
+  { id: 'Ra', nam: 'Radio',        sym: 'Ra',  atm: 88,  fac: 'Usado en tratamientos contra el cáncer.' },
+  { id: 'Ac', nam: 'Actinio',      sym: 'Ac',  atm: 89,  fac: 'Usado en generadores nucleares.' },
+  { id: 'Th', nam: 'Torio',        sym: 'Th',  atm: 90,  fac: 'Usado en reactores nucleares.' },
+  { id: 'Pa', nam: 'Protactinio',  sym: 'Pa',  atm: 91,  fac: 'Usado en investigación nuclear.' },
+  { id: 'U',  nam: 'Uranio',       sym: 'U',   atm: 92,  fac: 'Usado en reactores y armas nucleares.' },
+  { id: 'Np', nam: 'Neptunio',     sym: 'Np',  atm: 93,  fac: 'Usado en detectores de radiación.' },
+  { id: 'Pu', nam: 'Plutonio',     sym: 'Pu',  atm: 94,  fac: 'Usado en baterías nucleares y armas.' },
+  { id: 'Am', nam: 'Americio',     sym: 'Am',  atm: 95,  fac: 'Usado en detectores de humo.' },
+  { id: 'Cm', nam: 'Curio',        sym: 'Cm',  atm: 96,  fac: 'Usado en generadores espaciales.' },
+  { id: 'Bk', nam: 'Berkelio',     sym: 'Bk',  atm: 97,  fac: 'Usado en investigación nuclear.' },
+  { id: 'Cf', nam: 'Californio',   sym: 'Cf',  atm: 98,  fac: 'Usado en escáneres de minerales.' },
+  { id: 'Es', nam: 'Einstenio',    sym: 'Es',  atm: 99,  fac: 'Usado en investigación científica.' },
+  { id: 'Fm', nam: 'Fermio',       sym: 'Fm',  atm: 100, fac: 'Usado en investigación nuclear.' },
+  { id: 'Md', nam: 'Mendelevio',   sym: 'Md',  atm: 101, fac: 'Usado en investigación atómica.' },
+  { id: 'No', nam: 'Nobelio',      sym: 'No',  atm: 102, fac: 'Usado en investigación atómica.' },
+  { id: 'Lr', nam: 'Lawrencio',    sym: 'Lr',  atm: 103, fac: 'Usado en investigación nuclear.' },
+  { id: 'Rf', nam: 'Rutherfordio', sym: 'Rf',  atm: 104, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Db', nam: 'Dubnio',       sym: 'Db',  atm: 105, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Sg', nam: 'Seaborgio',    sym: 'Sg',  atm: 106, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Bh', nam: 'Bohrio',       sym: 'Bh',  atm: 107, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Hs', nam: 'Hassio',       sym: 'Hs',  atm: 108, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Mt', nam: 'Meitnerio',    sym: 'Mt',  atm: 109, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Ds', nam: 'Darmstatio',   sym: 'Ds',  atm: 110, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Rg', nam: 'Roentgenio',   sym: 'Rg',  atm: 111, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Cn', nam: 'Copernicio',   sym: 'Cn',  atm: 112, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Nh', nam: 'Nihonio',      sym: 'Nh',  atm: 113, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Fl', nam: 'Flerovio',     sym: 'Fl',  atm: 114, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Mc', nam: 'Moscovio',     sym: 'Mc',  atm: 115, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Lv', nam: 'Livermorio',   sym: 'Lv',  atm: 116, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Ts', nam: 'Tenesino',     sym: 'Ts',  atm: 117, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+  { id: 'Og', nam: 'Oganesón',     sym: 'Og',  atm: 118, fac: 'Elemento sintético sin aplicaciones prácticas.' },
+
     ];
 
     // Variables globales
@@ -137,7 +236,7 @@
     let rem = 0;    // tiempo restante
 
     // Inicia el juego según dificultad: 'facl', 'norm', 'difc'
-    function str(dif) {
+function str(dif) {
       let num = 0, tim = 0;
       if(dif==='facl'){
         num = 5; tim = 60;
@@ -148,10 +247,11 @@
       }
       tot = num;
       rem = tim;
+      
       document.getElementById('tmr').textContent = rem + " s";
       
       // Selecciona los elementos y crea dos cartas: una con info y otra con hecho
-      let arr = els.slice(0, num);
+      let arr = els.sort(() => Math.random() - 0.5).slice(0, num);
       let dup = [];
       arr.forEach(it => {
         dup.push({ ...it, typ: 'inf' });
