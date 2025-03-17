@@ -305,45 +305,58 @@ function str(dif) {
       }
     }
 
-    // Maneja el clic en una tarjeta
     function clc(e) {
-      let dv = e.currentTarget;
-      if(dv.classList.contains('flp') || dv.classList.contains('hid')) return;
-      let id = dv.dataset.ix;
-      let it = sel.find(c => c.ix == id);
-      // Prepara la parte trasera con el contenido adecuado
-      let bak = dv.querySelector('.bak');
-      if(it.typ === 'inf'){
-        bak.innerHTML = '<strong>' + it.sym + '</strong><br>' + it.nam + '<br>N° ' + it.atm;
-      } else {
-        bak.innerHTML = it.fac;
-      }
-      dv.classList.add('flp');
-      if(!op1) {
-        op1 = dv;
-      } else if(!op2) {
-        op2 = dv;
-        // Comprueba coincidencia: mismo id y tipos complementarios
-        if(op1.dataset.id === op2.dataset.id && op1.dataset.typ !== op2.dataset.typ) {
-          op1.classList.add('hid');
-          op2.classList.add('hid');
-          cnt++;
-          op1 = null; op2 = null;
-          if(cnt === tot) {
-            clearInterval(tmr);
-            setTimeout(() => { alert('¡Ganaste!'); rst(); }, 500);
-          }
-        } else {
-          setTimeout(() => {
-            op1.classList.remove('flp');
-            op1.querySelector('.bak').innerHTML = '';
-            op2.classList.remove('flp');
-            op2.querySelector('.bak').innerHTML = '';
-            op1 = null; op2 = null;
-          }, 800);
+  let dv = e.currentTarget;
+  if (dv.classList.contains('flp') || dv.classList.contains('hid')) return;
+  
+  let id = dv.dataset.ix;
+  let it = sel.find(c => c.ix == id);
+  
+  let bak = dv.querySelector('.bak');
+  if (it.typ === 'inf') {
+    bak.innerHTML = '<strong>' + it.sym + '</strong><br>' + it.nam + '<br>N° ' + it.atm;
+  } else {
+    bak.innerHTML = it.fac;
+  }
+  
+  dv.classList.add('flp');
+
+  if (!op1) {
+    op1 = dv;
+  } else if (!op2) {
+    op2 = dv;
+    
+    // Deshabilitar temporalmente los clics en todas las cartas
+    document.querySelectorAll('.crd').forEach(c => c.style.pointerEvents = 'none');
+
+    if (op1.dataset.id === op2.dataset.id && op1.dataset.typ !== op2.dataset.typ) {
+      setTimeout(() => {
+        op1.classList.add('hid');
+        op2.classList.add('hid');
+        cnt++;
+        op1 = null;
+        op2 = null;
+        document.querySelectorAll('.crd').forEach(c => c.style.pointerEvents = 'auto'); // Habilitar clics nuevamente
+
+        if (cnt === tot) {
+          clearInterval(tmr);
+          setTimeout(() => { alert('¡Ganaste!'); rst(); }, 500);
         }
-      }
+      }, 400);
+    } else {
+      setTimeout(() => {
+        op1.classList.remove('flp');
+        op1.querySelector('.bak').innerHTML = '';
+        op2.classList.remove('flp');
+        op2.querySelector('.bak').innerHTML = '';
+        op1 = null;
+        op2 = null;
+        document.querySelectorAll('.crd').forEach(c => c.style.pointerEvents = 'auto'); // Habilitar clics nuevamente
+      }, 800);
     }
+  }
+}
+
 
     // Reinicia el juego
     function rst() {
